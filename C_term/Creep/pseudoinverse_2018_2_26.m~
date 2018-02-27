@@ -1,7 +1,7 @@
 
 clear
 
-% 60 Sample Data 10min 
+
 load('p1_p2_10min_60samples_2018_2_26.mat')
 % Part 2 1N force
 F1 = 1;
@@ -51,8 +51,8 @@ end
 % Extract force array for inverse calculation
 % F1_ideal = F1_appl(length(F1_corr)+1 : length(F1_appl));
 F1_ideal = F1*ones(1,60);
-F2_ideal = F2*ones(1,60);
-F3_ideal = F3*ones(1,60);
+F2_ideal = F2*ones(1,60)
+F3_ideal = F3*ones(1,60)
 
 % Combine F1 array, F2 array and F3 array
 F1F2F3_array = [F1_array ; F2_array ; F3_array];
@@ -67,9 +67,9 @@ predi_array = F1F2F3_array*h;
 
 % 1N force
 F1_predi = F1F2F3_array*h;
-F1_predi_fonly = F1_predi(1:length(F1_corr));
-F1_predi = [zeros(length(F1_corr), 1); F1_predi_fonly];
-F1_predi_fonly = F1_predi_fonly';
+F1_predi = F1_predi(1:length(F1_corr));
+F1_predi = [zeros(length(F1_corr), 1); F1_predi];
+
 % 2N force
 F2_predi = F1F2F3_array*h;
 F2_predi = F2_predi((length(F1_corr)+1) : (length(F1_corr)+length(F2_corr)));
@@ -103,13 +103,6 @@ plot(F3_corr,'r')
 ylabel('F_{CORR} [N]')
 xlabel('TIME INDEX')
 
-% Create another figure
-figure(2)
-subplot(2,1,1)
-hold off
-plot(F1_ideal,F1_predi_fonly)
-
-
 subplot(2,1,2)
 hold off
 plot(F1_appl,':b')
@@ -128,6 +121,5 @@ ylabel('F_{APPL} F_{MEAS} [N]')
 xlabel('TIME INDEX')
 axis([0 120 -1 4])
 grid on
-
 
 
