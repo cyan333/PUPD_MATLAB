@@ -10,8 +10,7 @@ F2 = 2;
 Rfsr_2N = p2_2N_R;
 % Part 2 3N force
 F3 = 3;
-Rfsr_3N = p2_3N_R;
-
+Rfsr_3N = p2_3N_R; 
 % Choose last time point to use for x calculation
 t = length(Rfsr_2N);
 % Choose the last point from data to use for x fit
