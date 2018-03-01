@@ -195,10 +195,9 @@ hold on
 plot(F12345_corr_1,polyval(polyfit_result,F12345_corr_1),'b')
 plot(F12345_poly, F12345_appl,'r')
 axis([0 6 0 6])
-ylabel('Applied Force')
-xlabel('R_{FSR} [k\Omega]')
+ylabel('F_{APPL} [N]')
+xlabel('F_{MEAS} [N]')
 grid on
-
 
 
 
