@@ -5,19 +5,19 @@ clear
 load('p4_p2_10min_2018_4_3_softbase.mat')
 % Part 2 1N force
 F1 = 1;
-Rfsr_1N = p4_1N_R;
+Rfsr_1N = p2_1N_R;
 % Part 2 2N force
 F2 = 2;
-Rfsr_2N = p4_2N_R;
+Rfsr_2N = p2_2N_R;
 % Part 3 3N force
 F3 = 3;
-Rfsr_3N = p4_3N_R;
+Rfsr_3N = p2_3N_R;
 % Part 4 4N force
 F4 = 4;
-Rfsr_4N = p4_4N_R;
+Rfsr_4N = p2_4N_R;
 % Part 2 2N force
 F5 = 5;
-Rfsr_5N = p4_5N_R;
+Rfsr_5N = p2_5N_R;
 
 % Choose last time point to use for x calculation
 t = 60;
@@ -51,15 +51,14 @@ b = polyfit_result(2);
 c = polyfit_result(3);
 
 % Plot in Rfsr data for calibration
-F1_poly = fo*(a*(Rfsr_1N/Ro).^(2/x)+b*(Rfsr_1N/Ro).^(1/x)+c);
-F2_poly = fo*(a*(Rfsr_2N/Ro).^(2/x)+b*(Rfsr_2N/Ro).^(1/x)+c);
-F3_poly = fo*(a*(Rfsr_3N/Ro).^(2/x)+b*(Rfsr_3N/Ro).^(1/x)+c);
-F4_poly = fo*(a*(Rfsr_4N/Ro).^(2/x)+b*(Rfsr_4N/Ro).^(1/x)+c);
-F5_poly = fo*(a*(Rfsr_5N/Ro).^(2/x)+b*(Rfsr_5N/Ro).^(1/x)+c);
+F1_corr = fo*(a*(Rfsr_1N/Ro).^(2/x)+b*(Rfsr_1N/Ro).^(1/x)+c);
+F2_corr = fo*(a*(Rfsr_2N/Ro).^(2/x)+b*(Rfsr_2N/Ro).^(1/x)+c);
+F3_corr = fo*(a*(Rfsr_3N/Ro).^(2/x)+b*(Rfsr_3N/Ro).^(1/x)+c);
+F4_corr = fo*(a*(Rfsr_4N/Ro).^(2/x)+b*(Rfsr_4N/Ro).^(1/x)+c);
+F5_corr = fo*(a*(Rfsr_5N/Ro).^(2/x)+b*(Rfsr_5N/Ro).^(1/x)+c);
 
 % Get the last data point
-F12345_poly = [F1_poly(t) F2_poly(t) F3_poly(t) F4_poly(t) F5_poly(t)];
-
+F12345_poly = [F1_corr(t) F2_corr(t) F3_corr(t) F4_corr(t) F5_corr(t)];
 
 
 % Array to use for deconvolution
@@ -242,13 +241,15 @@ grid minor
 
 figure(3)
 hold off
-plot(F1_poly,'DisplayName','1N - Measured_poly')
+plot(F1_predi,'b','DisplayName','1N - Predicted')
 hold on
-plot(F2_poly,'DisplayName','2N - Measured_poly')
-plot(F3_poly,'DisplayName','3N - Measured_poly')
-plot(F4_poly,'DisplayName','4N - Measured_poly')
-plot(F5_poly,'DisplayName','5N - Measured_poly')
+plot(F2_predi,'b','DisplayName','2N - Predicted')
+plot(F3_predi,'b','DisplayName','3N - Predicted')
+plot(F4_predi,'b','DisplayName','4N - Predicted')
+plot(F5_predi,'b','DisplayName','5N - Predicted')
+ylabel('F_{APPL} F_{MEAS} [N]')
+xlabel('TIME SAMPLE [10s/Sample]')
+axis([0 120 -1 6])
 grid on
 grid minor
-
-
+legend('show')
