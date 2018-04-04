@@ -37,7 +37,28 @@ F5_corr = fo*(Rfsr_5N/Ro).^(1/x);
 
 
 
+%%%%%%%%%%%%%%%%%%% PolyFit %%%%%%%%%%%%%%%%%%%%
 
+% R = [Rfsr_1N(t) Rfsr_2N(t) Rfsr_3N(t) Rfsr_4N(t) Rfsr_5N(t)];
+F12345_corr = [F1_corr(t) F2_corr(t) F3_corr(t) F4_corr(t) F5_corr(t)];
+F12345_appl = [F1 F2 F3 F4 F5];
+polyfit_result = polyfit(F12345_corr,F12345_appl,2);
+
+%%%%%%%%%%%%%%%%%%% Recalculate after Polyfit %%%%%%%%%%%%%%%%%%%%
+% Polyfit result
+a = polyfit_result(1);
+b = polyfit_result(2);
+c = polyfit_result(3);
+
+% Plot in Rfsr data for calibration
+F1_corr = fo*(a*(Rfsr_1N/Ro).^(2/x)+b*(Rfsr_1N/Ro).^(1/x)+c);
+F2_corr = fo*(a*(Rfsr_2N/Ro).^(2/x)+b*(Rfsr_2N/Ro).^(1/x)+c);
+F3_corr = fo*(a*(Rfsr_3N/Ro).^(2/x)+b*(Rfsr_3N/Ro).^(1/x)+c);
+F4_corr = fo*(a*(Rfsr_4N/Ro).^(2/x)+b*(Rfsr_4N/Ro).^(1/x)+c);
+F5_corr = fo*(a*(Rfsr_5N/Ro).^(2/x)+b*(Rfsr_5N/Ro).^(1/x)+c);
+
+% Get the last data point
+F12345_poly = [F1_corr(t) F2_corr(t) F3_corr(t) F4_corr(t) F5_corr(t)];
 
 
 % Array to use for deconvolution
@@ -220,13 +241,15 @@ grid minor
 
 figure(3)
 hold off
-plot(F1_poly,'DisplayName','1N - Measured_poly')
+plot(F1_predi,'b','DisplayName','1N - Predicted')
 hold on
-plot(F2_poly,'DisplayName','2N - Measured_poly')
-plot(F3_poly,'DisplayName','3N - Measured_poly')
-plot(F4_poly,'DisplayName','4N - Measured_poly')
-plot(F5_poly,'DisplayName','5N - Measured_poly')
+plot(F2_predi,'b','DisplayName','2N - Predicted')
+plot(F3_predi,'b','DisplayName','3N - Predicted')
+plot(F4_predi,'b','DisplayName','4N - Predicted')
+plot(F5_predi,'b','DisplayName','5N - Predicted')
+ylabel('F_{APPL} F_{MEAS} [N]')
+xlabel('TIME SAMPLE [10s/Sample]')
+axis([0 120 -1 6])
 grid on
 grid minor
-
-
+legend('show')
