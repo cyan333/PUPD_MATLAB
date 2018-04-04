@@ -37,6 +37,28 @@ F5_corr = fo*(Rfsr_5N/Ro).^(1/x);
 
 
 
+%%%%%%%%%%%%%%%%%%% PolyFit %%%%%%%%%%%%%%%%%%%%
+
+% R = [Rfsr_1N(t) Rfsr_2N(t) Rfsr_3N(t) Rfsr_4N(t) Rfsr_5N(t)];
+F12345_corr = [F1_corr(t) F2_corr(t) F3_corr(t) F4_corr(t) F5_corr(t)];
+F12345_appl = [F1 F2 F3 F4 F5];
+polyfit_result = polyfit(F12345_corr,F12345_appl,2);
+
+%%%%%%%%%%%%%%%%%%% Recalculate after Polyfit %%%%%%%%%%%%%%%%%%%%
+% Polyfit result
+a = polyfit_result(1);
+b = polyfit_result(2);
+c = polyfit_result(3);
+
+% Plot in Rfsr data for calibration
+F1_poly = fo*(a*(Rfsr_1N/Ro).^(2/x)+b*(Rfsr_1N/Ro).^(1/x)+c);
+F2_poly = fo*(a*(Rfsr_2N/Ro).^(2/x)+b*(Rfsr_2N/Ro).^(1/x)+c);
+F3_poly = fo*(a*(Rfsr_3N/Ro).^(2/x)+b*(Rfsr_3N/Ro).^(1/x)+c);
+F4_poly = fo*(a*(Rfsr_4N/Ro).^(2/x)+b*(Rfsr_4N/Ro).^(1/x)+c);
+F5_poly = fo*(a*(Rfsr_5N/Ro).^(2/x)+b*(Rfsr_5N/Ro).^(1/x)+c);
+
+% Get the last data point
+F12345_poly = [F1_poly(t) F2_poly(t) F3_poly(t) F4_poly(t) F5_poly(t)];
 
 
 
