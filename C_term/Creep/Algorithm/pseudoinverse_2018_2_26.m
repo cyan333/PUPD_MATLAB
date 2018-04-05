@@ -5,19 +5,19 @@ clear
 load('p4_p2_10min_2018_4_3_softbase.mat')
 % Part 2 1N force
 F1 = 1;
-Rfsr_1N = p2_1N_R;
+Rfsr_1N = p4_1N_R;
 % Part 2 2N force
 F2 = 2;
-Rfsr_2N = p2_2N_R;
+Rfsr_2N = p4_2N_R;
 % Part 3 3N force
 F3 = 3;
-Rfsr_3N = p2_3N_R;
+Rfsr_3N = p4_3N_R;
 % Part 4 4N force
 F4 = 4;
-Rfsr_4N = p2_4N_R;
+Rfsr_4N = p4_4N_R;
 % Part 2 2N force
 F5 = 5;
-Rfsr_5N = p2_5N_R;
+Rfsr_5N = p4_5N_R;
 
 % Choose last time point to use for x calculation
 t = 60;
