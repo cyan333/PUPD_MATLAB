@@ -83,7 +83,7 @@ F5_meas = [zero F5_corr];
 % Create a 3 dimention matrix, where each row corresponding to each force
 % and each page corresponding to each different sampel line
 
-for lineIndex = 1:20
+for lineIndex = 1:40
     for forceIndex = 1:5
        array = [];
        elementIndex = 1;
@@ -128,7 +128,7 @@ end
 % Plot Standard Deviation for every force
 for i=1:5
     figure(61)
-    subplot(5,1,i)
+%     subplot(5,1,i)
     plot(F_std(i,:),'DisplayName',num2str(i));
     legend 
     hold on
