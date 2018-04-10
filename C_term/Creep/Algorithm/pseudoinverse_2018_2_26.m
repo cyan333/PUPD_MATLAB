@@ -39,26 +39,26 @@ F5_corr = fo*(Rfsr_5N/Ro).^(1/x);
 
 %%%%%%%%%%%%%%%%%%% PolyFit %%%%%%%%%%%%%%%%%%%%
 
-% % R = [Rfsr_1N(t) Rfsr_2N(t) Rfsr_3N(t) Rfsr_4N(t) Rfsr_5N(t)];
+R = [Rfsr_1N(t) Rfsr_2N(t) Rfsr_3N(t) Rfsr_4N(t) Rfsr_5N(t)];
 F12345_corr = [F1_corr(t) F2_corr(t) F3_corr(t) F4_corr(t) F5_corr(t)];
 F12345_appl = [F1 F2 F3 F4 F5];
-% polyfit_result = polyfit(F12345_corr,F12345_appl,2);
-% 
-% %%%%%%%%%%%%%%%%%%% Recalculate after Polyfit %%%%%%%%%%%%%%%%%%%%
-% % Polyfit result
-% a = polyfit_result(1);
-% b = polyfit_result(2);
-% c = polyfit_result(3);
-% 
-% % Plot in Rfsr data for calibration
-% F1_corr = fo*(a*(Rfsr_1N/Ro).^(2/x)+b*(Rfsr_1N/Ro).^(1/x)+c);
-% F2_corr = fo*(a*(Rfsr_2N/Ro).^(2/x)+b*(Rfsr_2N/Ro).^(1/x)+c);
-% F3_corr = fo*(a*(Rfsr_3N/Ro).^(2/x)+b*(Rfsr_3N/Ro).^(1/x)+c);
-% F4_corr = fo*(a*(Rfsr_4N/Ro).^(2/x)+b*(Rfsr_4N/Ro).^(1/x)+c);
-% F5_corr = fo*(a*(Rfsr_5N/Ro).^(2/x)+b*(Rfsr_5N/Ro).^(1/x)+c);
-% 
-% % Get the last data point
-% F12345_poly = [F1_corr(t) F2_corr(t) F3_corr(t) F4_corr(t) F5_corr(t)];
+polyfit_result = polyfit(F12345_corr,F12345_appl,2);
+
+%%%%%%%%%%%%%%%%%%% Recalculate after Polyfit %%%%%%%%%%%%%%%%%%%%
+% Polyfit result
+a = polyfit_result(1);
+b = polyfit_result(2);
+c = polyfit_result(3);
+
+% Plot in Rfsr data for calibration
+F1_corr = fo*(a*(Rfsr_1N/Ro).^(2/x)+b*(Rfsr_1N/Ro).^(1/x)+c);
+F2_corr = fo*(a*(Rfsr_2N/Ro).^(2/x)+b*(Rfsr_2N/Ro).^(1/x)+c);
+F3_corr = fo*(a*(Rfsr_3N/Ro).^(2/x)+b*(Rfsr_3N/Ro).^(1/x)+c);
+F4_corr = fo*(a*(Rfsr_4N/Ro).^(2/x)+b*(Rfsr_4N/Ro).^(1/x)+c);
+F5_corr = fo*(a*(Rfsr_5N/Ro).^(2/x)+b*(Rfsr_5N/Ro).^(1/x)+c);
+
+% Get the last data point
+F12345_poly = [F1_corr(t) F2_corr(t) F3_corr(t) F4_corr(t) F5_corr(t)];
 
 
 % Array to use for deconvolution
@@ -86,7 +86,7 @@ F5_meas = [zero F5_corr];
 %%%%%%%%%%%%%%%%%%% Plot Data %%%%%%%%%%%%%%%%%%%%
 figure(1)
 % Rfsr raw plot
-subplot(2,1,1)
+subplot(4,1,1)
 hold off
 plot(Rfsr_1N,'DisplayName','1N')
 hold on
@@ -101,7 +101,7 @@ legend('show')
 
 % Corrected force plot
 % figure(10)
-subplot(2,1,2)
+subplot(4,1,2)
 hold off
 plot(F1_corr,'DisplayName','1N')
 hold on
@@ -115,41 +115,40 @@ grid on
 legend('show')
 
 % figure(11)
-% subplot(2,1,2)
-% hold off
-% plot(F1_appl,'--b','DisplayName','1N - Applied')
-% hold on
-% plot(F2_appl,'--r','DisplayName','2N - Applied')
-% plot(F3_appl,'--r','DisplayName','3N - Applied')
-% plot(F4_appl,'--r','DisplayName','4N - Applied')
-% plot(F5_appl,'--r','DisplayName','5N - Applied')
-% 
-% plot(F1_meas,'DisplayName','1N - Measured')
-% plot(F2_meas,'DisplayName','2N - Measured')
-% plot(F3_meas,'DisplayName','3N - Measured')
-% plot(F4_meas,'DisplayName','4N - Measured')
-% plot(F5_meas,'DisplayName','5N - Measured')
-% 
-% plot(F1_predi,'b','DisplayName','1N - Predicted')
-% plot(F2_predi,'b','DisplayName','2N - Predicted')
-% plot(F3_predi,'b','DisplayName','3N - Predicted')
-% plot(F4_predi,'b','DisplayName','4N - Predicted')
-% plot(F5_predi,'b','DisplayName','5N - Predicted')
-% ylabel('F_{APPL} F_{MEAS} [N]')
-% xlabel('TIME SAMPLE [10s/Sample]')
-% axis([0 120 -1 6])
-% grid on
-% grid minor
-% legend('show')
+subplot(2,1,2)
+hold off
+plot(F1_appl,'--r','DisplayName','1N - Applied')
+hold on
+plot(F2_appl,'--r','DisplayName','2N - Applied')
+plot(F3_appl,'--r','DisplayName','3N - Applied')
+plot(F4_appl,'--r','DisplayName','4N - Applied')
+plot(F5_appl,'--r','DisplayName','5N - Applied')
+
+plot(F1_meas,':r','DisplayName','1N - Measured')
+plot(F2_meas,':r','DisplayName','2N - Measured')
+plot(F3_meas,':r','DisplayName','3N - Measured')
+plot(F4_meas,':r','DisplayName','4N - Measured')
+plot(F5_meas,':r','DisplayName','5N - Measured')
+
+plot(F1_predi,'b','DisplayName','1N - Predicted')
+plot(F2_predi,'b','DisplayName','2N - Predicted')
+plot(F3_predi,'b','DisplayName','3N - Predicted')
+plot(F4_predi,'b','DisplayName','4N - Predicted')
+plot(F5_predi,'b','DisplayName','5N - Predicted')
+ylabel('F_{APPL} F_{MEAS} [N]')
+xlabel('TIME SAMPLE [10s/Sample]')
+axis([0 120 -1 6])
+grid on
+grid minor
+legend('show')
 
 figure(2)
 
 hold off
 scatter(F12345_appl,F12345_corr,'b','DisplayName','Experimental Data')
 hold on
-% plot(polyval(polyfit_result,F12345_corr),F12345_corr,'b','DisplayName','Polyfit Result')
-% plot(F12345_appl,F_poly,'r','DisplayName','Polyfit')
-% scatter(F12345_appl,F12345_poly,'r','DisplayName','after Polyfit')
+plot(polyval(polyfit_result,F12345_corr),F12345_corr,'b','DisplayName','Polyfit Result')
+scatter(F12345_appl,F12345_poly,'r','DisplayName','after Polyfit')
 axis([0 6 0 6])
 ylabel('F_{MEAS} [N]')
 xlabel('F_{APPL} [N]')

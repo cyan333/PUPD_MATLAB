@@ -154,7 +154,12 @@ for i=1:10
             take_this_index = take_this_index+1;
         end
     end
-
+%     resize_interval = floor(length(temp_step)/60);
+%     take_this_data = 1:resize_interval:length(temp_step);
+%     take_this_data = take_this_data(1:60);
+%     for take_this_index=1:length(take_this_data)
+%         temp_step_array(take_this_index,:)=temp_step(take_this_data(take_this_index));    
+%     end
     figure(25)
     plot(temp_step_array);
     hold on
