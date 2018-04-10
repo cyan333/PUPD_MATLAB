@@ -97,20 +97,20 @@ for lineIndex = 1:40
        F_appl(forceIndex,:,lineIndex) = [zero array F12345_appl(forceIndex)*ones(1,(60-lineIndex))];
     end
     
-       [h(lineIndex,:),...
-           F_predi(1,:,lineIndex),...
-           F_predi(2,:,lineIndex),...
-           F_predi(3,:,lineIndex),...
-           F_predi(4,:,lineIndex),...
-           F_predi(5,:,lineIndex)]=...
-           Deconvolution_Algorithm_Function(...
-           F1_corr,F2_corr,F3_corr,F4_corr,F5_corr,...
-           F1_meas,F2_meas,F3_meas,F4_meas,F5_meas,...
-           F_appl(1,:,lineIndex),...
-           F_appl(2,:,lineIndex),...
-           F_appl(3,:,lineIndex),...
-           F_appl(4,:,lineIndex),...
-           F_appl(5,:,lineIndex));
+    [h(lineIndex,:),...
+       F_predi(1,:,lineIndex),...
+       F_predi(2,:,lineIndex),...
+       F_predi(3,:,lineIndex),...
+       F_predi(4,:,lineIndex),...
+       F_predi(5,:,lineIndex)]=...
+       Deconvolution_Algorithm_Function(...
+       F1_corr,F2_corr,F3_corr,F4_corr,F5_corr,...
+       F1_meas,F2_meas,F3_meas,F4_meas,F5_meas,...
+       F_appl(1,:,lineIndex),...
+       F_appl(2,:,lineIndex),...
+       F_appl(3,:,lineIndex),...
+       F_appl(4,:,lineIndex),...
+       F_appl(5,:,lineIndex));
        
     for j=1:5
         F_std(j,lineIndex) = std(F_predi(j,(61+lineIndex):120,lineIndex));
@@ -126,45 +126,81 @@ for lineIndex = 1:40
 end
 
 % Plot Standard Deviation for every force
-% for i=1:5
-%     figure(61)
-% %     subplot(5,1,i)
-%     plot(F_std(i,:),'DisplayName',num2str(i));
-%     legend 
-%     hold on
-% end
+for i=1:5
+    figure(61)
+    subplot(5,1,i)
+    plot(F_std(i,:),'DisplayName',num2str(i));
+    legend 
+    hold on
+end
 
 % Second Order System Critically Damped Step Response
-
-
 zeta = 1:0.5:5.5;
-for i=1:10
-    num = 1;
-    den = [1 2*zeta(i) 1];
-    a = tf(num,den);
-    [temp_step,temp_time]=step(a,60);
-    figure(1)
-    step(a,60);
-    hold on
-    take_this_index = 1;
-    temp_time=floor(temp_time);
-    for temp_index=1:length(temp_time)
-        if(temp_time(temp_index) == take_this_index)
-            temp_step_array(take_this_index,:)=temp_step(temp_index);
-            take_this_index = take_this_index+1;
+
+for lineIndex=1:10
+    for amptitute=1:5
+        num = amptitute;
+        den = [1 2*zeta(lineIndex) 1];
+        a = tf(num,den);
+        [temp_step,temp_time]=step(a,60);
+    %         figure(1)
+    %         step(a,60);
+    %         hold on
+        take_this_index = 1;
+        temp_time=floor(temp_time);
+        for temp_index=1:length(temp_time)
+            if(temp_time(temp_index) == take_this_index)
+                temp_step_array(:,take_this_index)=temp_step(temp_index);
+                take_this_index = take_this_index+1;
+            end
         end
+        
+%%%%%%%%%%%%%%%%%%% Plot Step Response for Second Order System %%%%%%%%%%%%%%%%%%%%
+        figure(25)
+        
+        plot(temp_step_array);
+        hold on
+
+
+        F_appl_damp(amptitute,:,lineIndex) = [zeros(1,60) temp_step_array];
+
     end
-%     resize_interval = floor(length(temp_step)/60);
-%     take_this_data = 1:resize_interval:length(temp_step);
-%     take_this_data = take_this_data(1:60);
-%     for take_this_index=1:length(take_this_data)
-%         temp_step_array(take_this_index,:)=temp_step(take_this_data(take_this_index));    
-%     end
-    figure(25)
-    plot(temp_step_array);
-    hold on
-    damp_array(:,i) = [zeros(1,60) temp_step_array'];
     
+    % Loop through all the lines and process the algorithm
+    [h_damp(lineIndex,:),...
+           F_predi_damp(1,:,lineIndex),...
+           F_predi_damp(2,:,lineIndex),...
+           F_predi_damp(3,:,lineIndex),...
+           F_predi_damp(4,:,lineIndex),...
+           F_predi_damp(5,:,lineIndex)]=...
+           Deconvolution_Algorithm_Function(...
+           F1_corr,F2_corr,F3_corr,F4_corr,F5_corr,...
+           F1_meas,F2_meas,F3_meas,F4_meas,F5_meas,...
+           F_appl_damp(1,:,lineIndex),...
+           F_appl_damp(2,:,lineIndex),...
+           F_appl_damp(3,:,lineIndex),...
+           F_appl_damp(4,:,lineIndex),...
+           F_appl_damp(5,:,lineIndex));
+       
+    % Calculate the standard deviation for each line (last 60 data)
+    for j=1:5
+    F_std_damp(j,lineIndex) = std(F_predi_damp(j,(61+lineIndex):120,lineIndex));
+    
+%%%%%%%%%%%%%%%%%%% Plot Predicted Data for 2nd Order Step Applied Force %%%%%%%%%%%%%%%%%%%%
+    figure(j)
+    plot(F_predi_damp(j,61:120,lineIndex),'DisplayName',num2str(lineIndex));
+    hold on
+
+    end
+end
+    
+% Plot Standard Deviation for every force
+for i=1:5
+    figure(51)
+    subplot(5,1,i)
+    plot(F_std(i,:),'DisplayName',num2str(i));
+    legend 
+    hold on
 end
 
 
