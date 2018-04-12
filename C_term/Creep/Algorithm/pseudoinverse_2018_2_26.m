@@ -182,28 +182,38 @@ F_predi_err = ((F_predi_avg-F12345_appl)./F12345_appl)*100;
 
 figure(4)
 subplot(3,1,[1,2]);
+hold off
+% Uncalibrated
+plot(F12345_appl,F_corr_avg,'o--','LineWidth',2);
 hold on
-plot(F12345_appl,F_corr_avg,'o-','LineWidth',2);
-hold on
-plot(F12345_appl,F_poly_avg,'o--','LineWidth',2);
+%Calibrated
+plot(F12345_appl,F_poly_avg,'o-','LineWidth',2);
 ylabel('CALCULATED FORCE [N]','FontSize',11,'FontWeight','bold');
 grid on
 grid minor
 set(gca,'xticklabel',{[]}) 
 
+text(1.3,4,'BEFORE POLYFIT','BackgroundColor',[1 1 1], 'FontSize',14);
+plot([2.5 3.0],[4 4],'--','Color',[0 0 0],'LineWidth',2);
+text(3.1,1.5,'AFTER POLYFIT','BackgroundColor',[1 1 1],'FontSize',14);
+plot([4.1 4.6],[1.5 1.5],'-','Color',[0 0 0],'LineWidth',2)
+
 subplot(3,1,3);
-hold on
+hold off
+%Uncalibrated
 plot(F12345_appl,F_corr_err,'o-','LineWidth',2);
 hold on
+%Calibrated
 plot(F12345_appl,F_poly_err,'o--','LineWidth',2);
-xlabel({'APPLIED FORCE','[N]'},'FontSize',11,'FontWeight','bold');
+xlabel({'APPLIED FORCE [N]'},'FontSize',11,'FontWeight','bold');
 ylabel({'CALCULATED FORCE','[N]'},'FontSize',11,'FontWeight','bold');
 grid on
 grid minor
 
 figure(5)
 subplot(3,1,[1,2])
-hold on
+hold off
+% Prediction
 plot(F12345_appl,F_predi_avg,'o-','LineWidth',2);
 hold on
 plot(F12345_appl,F_poly_avg,'o--','LineWidth',2);
@@ -212,21 +222,18 @@ grid on
 grid minor
 set(gca,'xticklabel',{[]}) 
 
-text(1.1,5,'UNCALIBRATED','BackgroundColor',[1 1 1], 'FontSize',14);
-plot([2.12 2.5],[5 5],'--','Color',[0 0 0],'LineWidth',2);
-
-text(3.2,1,'CALIBRATED','BackgroundColor',[1 1 1],'FontSize',14);
-plot([4.05 4.45],[1 1],'-','Color',[0 0 0],'LineWidth',2)
-
-
+text(1.4,5,'POLYFIT RESULT','BackgroundColor',[1 1 1], 'FontSize',14);
+plot([2.5 3.0],[5 5],'--','Color',[0 0 0],'LineWidth',2);
+text(2.5,1,'DECONVOLUTION RESULT','BackgroundColor',[1 1 1],'FontSize',14);
+plot([4.17 4.6],[0.95 0.95],'-','Color',[0 0 0],'LineWidth',2)
 
 % Plot Error
 subplot(3,1,3);
-hold on
+hold off
 plot(F12345_appl,F_predi_err,'o-','LineWidth',2);
 hold on
 plot(F12345_appl,F_poly_err,'o--','LineWidth',2);
-xlabel({'APPLIED FORCE','[N]'},'FontSize',11,'FontWeight','bold');
+xlabel({'APPLIED FORCE [N]'},'FontSize',11,'FontWeight','bold');
 ylabel({'CALCULATED FORCE','[N]'},'FontSize',11,'FontWeight','bold');
 grid on
 grid minor
