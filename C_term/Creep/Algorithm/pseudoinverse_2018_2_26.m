@@ -210,6 +210,7 @@ ylabel({'CALCULATED FORCE','[N]'},'FontSize',11,'FontWeight','bold');
 grid on
 grid minor
 
+
 figure(5)
 subplot(3,1,[1,2])
 hold off
@@ -217,7 +218,7 @@ hold off
 plot(F12345_appl,F_predi_avg,'o-','LineWidth',2);
 hold on
 plot(F12345_appl,F_poly_avg,'o--','LineWidth',2);
-ylabel({'CALCULATED FORCE','[N]'},'FontSize',11,'FontWeight','bold');
+ylabel({'CALCULATED FORCE [N]'},'FontSize',11,'FontWeight','bold');
 grid on
 grid minor
 set(gca,'xticklabel',{[]}) 
@@ -234,8 +235,11 @@ plot(F12345_appl,F_predi_err,'o-','LineWidth',2);
 hold on
 plot(F12345_appl,F_poly_err,'o--','LineWidth',2);
 xlabel({'APPLIED FORCE [N]'},'FontSize',11,'FontWeight','bold');
-ylabel({'CALCULATED FORCE','[N]'},'FontSize',11,'FontWeight','bold');
+ylabel({'% ERROR'},'FontSize',11,'FontWeight','bold');
 grid on
 grid minor
+axis([0.5 5 -6 6])
+yticks([-5 -2 0 2 5]);
+
 
 
