@@ -5,19 +5,19 @@ clear
 load('p4_p2_10min_2018_4_3_softbase.mat')
 % Part 2 1N force
 F1 = 1;
-Rfsr_1N = p4_1N_R;
+Rfsr_1N = p2_1N_R;
 % Part 2 2N force
 F2 = 2;
-Rfsr_2N = p4_2N_R;
+Rfsr_2N = p2_2N_R;
 % Part 3 3N force
 F3 = 3;
-Rfsr_3N = p4_3N_R;
+Rfsr_3N = p2_3N_R;
 % Part 4 4N force
 F4 = 4;
-Rfsr_4N = p4_4N_R;
+Rfsr_4N = p2_4N_R;
 % Part 2 2N force
 F5 = 5;
-Rfsr_5N = p4_5N_R;
+Rfsr_5N = p2_5N_R;
 
 % Choose last time point to use for x calculation
 t = 60;
@@ -83,7 +83,7 @@ F5_meas = [zero F5_corr];
 % Create a 3 dimention matrix, where each row corresponding to each force
 % and each page corresponding to each different sampel line
 
-for lineIndex = 1:40
+for lineIndex = 1:13
     for forceIndex = 1:5
        array = [];
        elementIndex = 1;
@@ -113,10 +113,28 @@ for lineIndex = 1:40
        F_appl(5,:,lineIndex));
        
     for j=1:5
-        F_std(j,lineIndex) = std(F_predi(j,(61+lineIndex):120,lineIndex));
-%         figure(j)
-%         plot(F_predi(j,61:120,lineIndex),'DisplayName',num2str(lineIndex));
-%         hold on
+        F_std(j,lineIndex) = std(F_predi(j,(75+lineIndex):120,lineIndex));
+        
+        % Plot Data
+        figure(5)
+        subplot(2,2,2)
+        plot(F_predi(j,61:120,lineIndex),'DisplayName',num2str(lineIndex));
+        title('Simulation Prediction Results - Ramp');
+        hold on
+        grid minor
+        axis([0 60 0 5.5])
+        ylabel('F_{PREDI} [N]')
+        xlabel('TIME SAMPLE [10s/Sample]')
+        
+        figure(5)
+        subplot(2,2,1)
+        plot(F_appl(j,60:120,lineIndex),'DisplayName',num2str(lineIndex));
+        title('Simulation Applied Force - Ramp');
+        hold on
+        grid minor
+        axis([0 60 0 5.5])
+        ylabel('F_{APPL} [N]')
+        xlabel('TIME SAMPLE [10s/Sample]')
     end
     
 %     figure(100)
@@ -127,17 +145,21 @@ end
 
 % Plot Standard Deviation for every force
 for i=1:5
-    figure(61)
-    subplot(5,1,i)
-    plot(F_std(i,:),'DisplayName',num2str(i));
+    figure(51)
+%     subplot(5,1,i)
+    semilogy(F_std(i,:),'DisplayName',num2str(i),'LineWidth',3);
+    title('Ramp Standard Deviation');
     legend 
+    grid minor
+    grid on
     hold on
+    
 end
 
 % Second Order System Critically Damped Step Response
-zeta = 1:0.5:5.5;
+zeta = 1:0.1:2.3;
 
-for lineIndex=1:10
+for lineIndex=1:13
     for amptitute=1:5
         num = amptitute;
         den = [1 2*zeta(lineIndex) 1];
@@ -156,13 +178,18 @@ for lineIndex=1:10
         end
         
 %%%%%%%%%%%%%%%%%%% Plot Step Response for Second Order System %%%%%%%%%%%%%%%%%%%%
-        figure(25)
-        plot(temp_step_array);
-        hold on
-
-
+        
         F_appl_damp(amptitute,:,lineIndex) = [zeros(1,60) temp_step_array];
-
+        
+        figure(5)
+        subplot(2,2,3)
+        plot(F_appl_damp(amptitute,60:120,lineIndex));
+        title('Simulation Applied Force - 2nd Order Step Response');
+        hold on
+        grid minor
+        axis([0 60 0 5.5])
+        ylabel('F_{APPL} [N]')
+        xlabel('TIME SAMPLE [10s/Sample]')
     end
     
     % Loop through all the lines and process the algorithm
@@ -183,24 +210,33 @@ for lineIndex=1:10
        
     % Calculate the standard deviation for each line (last 60 data)
     for j=1:5
-    F_std_damp(j,lineIndex) = std(F_predi_damp(j,(61+lineIndex):120,lineIndex));
+    F_std_damp(j,lineIndex) = std(F_predi_damp(j,(80+lineIndex):105,lineIndex));
     
 %%%%%%%%%%%%%%%%%%% Plot Predicted Data for 2nd Order Step Applied Force %%%%%%%%%%%%%%%%%%%%
-    figure(90)
-    subplot(5,1,j)
+    figure(5)
+    subplot(2,2,4)
     plot(F_predi_damp(j,61:120,lineIndex),'DisplayName',num2str(lineIndex));
+    title('Simulation Prediction Results - 2nd Order Step Response');
     hold on
-
+    grid minor
+    axis([0 60 0 5.5])
+    ylabel('F_{PREDI} [N]')
+    xlabel('TIME SAMPLE [10s/Sample]')
     end
 end
     
 % Plot Standard Deviation for every force
 for i=1:5
-    figure(51)
-    subplot(5,1,i)
-    plot(F_std(i,:),'DisplayName',num2str(i));
+    figure(61)
+%     subplot(5,1,i)
+    semilogy(F_std_damp(i,:),'DisplayName',num2str(i),'LineWidth',3);
+    title('2nd Order Step Response Standard Deviation ');
+    ylabel('Standard Deviation')
+    xlabel('Line Index')
     legend 
     hold on
+    grid minor
+    grid on
 end
 
 
