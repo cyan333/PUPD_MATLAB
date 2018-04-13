@@ -359,34 +359,34 @@ F_predi_err = ((F_predi_avg-F_appl_avg)./F12345_appl)*100;
 figure(11)
 % subplot(2,1,2)
 hold off
-plot(F_appl_damp(1,50:120,2),'r-.','LineWidth',4)
+plot(F_appl_damp(1,50:120,2),'-.','LineWidth',4,'Color',[0/255 114/255 189/255])
 hold on
-plot(F_appl_damp(2,50:120,2),'r-.','LineWidth',4)
-plot(F_appl_damp(3,50:120,2),'r-.','LineWidth',4)
-plot(F_appl_damp(4,50:120,2),'r-.','LineWidth',4)
-plot(F_appl_damp(5,50:120,2),'r-.','LineWidth',4)
+plot(F_appl_damp(2,50:120,2),'-.','LineWidth',4,'Color',[0/255 114/255 189/255])
+plot(F_appl_damp(3,50:120,2),'-.','LineWidth',4,'Color',[0/255 114/255 189/255])
+plot(F_appl_damp(4,50:120,2),'-.','LineWidth',4,'Color',[0/255 114/255 189/255])
+plot(F_appl_damp(5,50:120,2),'-','LineWidth',4,'Color',[0/255 114/255 189/255])
 
-plot(F1_meas(50:120),'--','LineWidth',2)
-plot(F2_meas(50:120),'--','LineWidth',2)
-plot(F3_meas(50:120),'--','LineWidth',2)
-plot(F4_meas(50:120),'--','LineWidth',2)
-plot(F5_meas(50:120),'--','LineWidth',2)
+plot(F1_meas(50:120),'--','LineWidth',3,'Color',[162/255 164/255 21/255])
+plot(F2_meas(50:120),'--','LineWidth',3,'Color',[162/255 164/255 21/255])
+plot(F3_meas(50:120),'--','LineWidth',3,'Color',[162/255 164/255 21/255])
+plot(F4_meas(50:120),'--','LineWidth',3,'Color',[162/255 164/255 21/255])
+plot(F5_meas(50:120),'--','LineWidth',3,'Color',[162/255 164/255 21/255])
 
-plot(F_predi_damp(1,50:120,2),'b-','LineWidth',2)
-plot(F_predi_damp(2,50:120,2),'b-','LineWidth',2)
-plot(F_predi_damp(3,50:120,2),'b-','LineWidth',2)
-plot(F_predi_damp(4,50:120,2),'b-','LineWidth',2)
-plot(F_predi_damp(5,50:120,2),'b-','LineWidth',2)
+plot(F_predi_damp(1,50:120,2),'-.','LineWidth',2,'Color',[217/255 83/255 25/255])
+plot(F_predi_damp(2,50:120,2),'-.','LineWidth',2,'Color',[217/255 83/255 25/255])
+plot(F_predi_damp(3,50:120,2),'-.','LineWidth',2,'Color',[217/255 83/255 25/255])
+plot(F_predi_damp(4,50:120,2),'-.','LineWidth',2,'Color',[217/255 83/255 25/255])
+plot(F_predi_damp(5,50:120,2),'-.','LineWidth',2,'Color',[217/255 83/255 25/255])
 ylabel('F_{APPL} F_{MEAS} [N]','FontSize',12,'FontWeight','bold')
 xlabel('TIME SAMPLE [10s/Sample]','FontSize',12,'FontWeight','bold')
 axis([0 70 0 6])
 grid on
 grid minor
 
-text(1.4,5,'POLYFIT RESULT','BackgroundColor',[1 1 1], 'FontSize',14);
-plot([2.5 3.0],[5 5],'--','Color',[0 0 0],'LineWidth',2);
-text(2.5,1,'DECONVOLUTION RESULT','BackgroundColor',[1 1 1],'FontSize',14);
-plot([4.17 4.6],[0.95 0.95],'-','Color',[0 0 0],'LineWidth',2)
+text(2,5.8,'P DATA','BackgroundColor',[1 1 1], 'FontSize',12);
+plot([23 30],[5.8 5.8],'--','Color',[0 0 0],'LineWidth',2);
+text(2,5.4,'MODEL PREDICTION','BackgroundColor',[1 1 1],'FontSize',12);
+plot([4.17 4.6],[0.95 0.95],'--','Color',[0 0 0],'LineWidth',2)
 
 
 

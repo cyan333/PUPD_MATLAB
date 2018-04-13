@@ -5,19 +5,19 @@ clear
 load('p4_p2_10min_2018_4_3_softbase.mat')
 % Part 2 1N force
 F1 = 1;
-Rfsr_1N = p2_1N_R;
+Rfsr_1N = p4_1N_R;
 % Part 2 2N force
 F2 = 2;
-Rfsr_2N = p2_2N_R;
+Rfsr_2N = p4_2N_R;
 % Part 3 3N force
 F3 = 3;
-Rfsr_3N = p2_3N_R;
+Rfsr_3N = p4_3N_R;
 % Part 4 4N force
 F4 = 4;
-Rfsr_4N = p2_4N_R;
+Rfsr_4N = p4_4N_R;
 % Part 2 2N force
 F5 = 5;
-Rfsr_5N = p2_5N_R;
+Rfsr_5N = p4_5N_R;
 
 % Choose last time point to use for x calculation
 t = 60;
@@ -180,47 +180,47 @@ F_predi_err = ((F_predi_avg-F12345_appl)./F12345_appl)*100;
 % grid minor
 % legend('show')
 
-figure(4)
-subplot(3,1,[1,2]);
-hold off
-% Uncalibrated
-plot(F12345_appl,F_corr_avg,'o--','LineWidth',2);
-hold on
-%Calibrated
-plot(F12345_appl,F_poly_avg,'o-','LineWidth',2);
-ylabel('CALCULATED FORCE [N]','FontSize',11,'FontWeight','bold');
-grid on
-grid minor
-set(gca,'xticklabel',{[]}) 
-
-text(1.3,4,'BEFORE POLYFIT','BackgroundColor',[1 1 1], 'FontSize',14);
-plot([2.5 3.0],[4 4],'--','Color',[0 0 0],'LineWidth',2);
-text(3.1,1.5,'AFTER POLYFIT','BackgroundColor',[1 1 1],'FontSize',14);
-plot([4.1 4.6],[1.5 1.5],'-','Color',[0 0 0],'LineWidth',2)
-
-subplot(3,1,3);
-hold off
-%Uncalibrated
-plot(F12345_appl,F_corr_err,'o-','LineWidth',2);
-hold on
-%Calibrated
-plot(F12345_appl,F_poly_err,'o--','LineWidth',2);
-xlabel({'APPLIED FORCE [N]'},'FontSize',11,'FontWeight','bold');
-ylabel({'CALCULATED FORCE','[N]'},'FontSize',11,'FontWeight','bold');
-grid on
-grid minor
+% figure(4)
+% subplot(3,1,[1,2]);
+% hold off
+% % Uncalibrated
+% plot(F12345_appl,F_corr_avg,'o--','LineWidth',2);
+% hold on
+% %Calibrated
+% plot(F12345_appl,F_poly_avg,'o-','LineWidth',2);
+% ylabel('CALCULATED FORCE [N]','FontSize',11,'FontWeight','bold');
+% grid on
+% grid minor
+% set(gca,'xticklabel',{[]}) 
+% 
+% text(1.3,4,'BEFORE POLYFIT','BackgroundColor',[1 1 1], 'FontSize',14);
+% plot([2.5 3.0],[4 4],'--','Color',[0 0 0],'LineWidth',2);
+% text(3.1,1.5,'AFTER POLYFIT','BackgroundColor',[1 1 1],'FontSize',14);
+% plot([4.1 4.6],[1.5 1.5],'-','Color',[0 0 0],'LineWidth',2)
+% 
+% subplot(3,1,3);
+% hold off
+% %Uncalibrated
+% plot(F12345_appl,F_corr_err,'o-','LineWidth',2);
+% hold on
+% %Calibrated
+% plot(F12345_appl,F_poly_err,'o--','LineWidth',2);
+% xlabel({'APPLIED FORCE [N]'},'FontSize',11,'FontWeight','bold');
+% ylabel({'CALCULATED FORCE','[N]'},'FontSize',11,'FontWeight','bold');
+% grid on
+% grid minor
 
 
 figure(5)
 subplot(3,1,[1,2])
-hold off
-% Prediction
-plot(F12345_appl,F_predi_avg,'o-','LineWidth',2);
 hold on
-plot(F12345_appl,F_poly_avg,'o--','LineWidth',2);
+% Prediction
+plot(F12345_appl,F_predi_avg,'o-','LineWidth',2,'Color',[0/255 114/255 189/255]);
+hold on
+plot(F12345_appl,F_poly_avg,'o--','LineWidth',2,'Color',[217/255 83/255 25/255]);
 ylabel({'CALCULATED FORCE [N]'},'FontSize',11,'FontWeight','bold');
 grid on
-grid minor
+
 set(gca,'xticklabel',{[]}) 
 
 text(1.4,5,'POLYFIT RESULT','BackgroundColor',[1 1 1], 'FontSize',14);
@@ -230,16 +230,15 @@ plot([4.17 4.6],[0.95 0.95],'-','Color',[0 0 0],'LineWidth',2)
 
 % Plot Error
 subplot(3,1,3);
-hold off
-plot(F12345_appl,F_predi_err,'o-','LineWidth',2);
 hold on
-plot(F12345_appl,F_poly_err,'o--','LineWidth',2);
+plot(F12345_appl,F_predi_err,'o-','LineWidth',2,'Color',[0/255 114/255 189/255]);
+hold on
+plot(F12345_appl,F_poly_err,'o--','LineWidth',2,'Color',[217/255 83/255 25/255]);
 xlabel({'APPLIED FORCE [N]'},'FontSize',11,'FontWeight','bold');
 ylabel({'% ERROR'},'FontSize',11,'FontWeight','bold');
 grid on
-grid minor
-axis([0.5 5 -6 6])
-yticks([-5 -2 0 2 5]);
+axis([1 5 -7 7])
+yticks([-7 -5 -2 0 2 5 7]);
 
 
 
